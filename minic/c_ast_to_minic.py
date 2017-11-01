@@ -1,7 +1,7 @@
 from __future__ import print_function
 from pycparser import c_ast
-import minic_ast as mc
-from mutils import lmap
+import minic.minic_ast as mc
+from minic.mutils import lmap
 
 
 # Assignments are all converted into assignments using the '=' operator.

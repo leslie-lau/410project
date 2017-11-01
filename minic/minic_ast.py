@@ -164,6 +164,8 @@ class Assignment(Node):
         if self.lvalue is not None: nodelist.append(("lvalue", self.lvalue))
         if self.rvalue is not None: nodelist.append(("rvalue", self.rvalue))
         return tuple(nodelist)
+    
+    attr_names = ()
 
 
 class BinaryOp(Node):
