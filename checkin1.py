@@ -7,8 +7,11 @@ from pycparser.c_ast import *
 
 class VarPrinter(NodeVisitor):
     
-    var_all = []
-    var_written = []
+    def __init__(self):
+        
+        self.var_all = []
+        self.var_written = []
+        
     
     def visit_Assignment(self, assignment):
         ''' Visit all assignment statements and calls insertVariables to build 
@@ -34,13 +37,13 @@ class VarPrinter(NodeVisitor):
         self.insertVariables(rvar, write=False)
         
         
-    def visit_If(self, ifstmt):
-        ''' Visit all If statements and adds variables to self.var_all if the 
-            if statement contains a single variable.
-            (ie. if (condition))
-        '''
-        if isinstance(ifstmt.cond, mc.ID):
-            self.var_all.append(ifstmt.cond.name)
+    #def visit_If(self, ifstmt):
+        #''' Visit all If statements and adds variables to self.var_all if the 
+            #if statement contains a single variable.
+            #(ie. if (condition))
+        #'''
+        #if isinstance(ifstmt.cond, mc.ID) and not ifstmt.cond.name in self.var_all:
+            #self.var_all.append(ifstmt.cond.name)
         
         
     def insertVariables(self, node, write):
@@ -64,7 +67,7 @@ class VarPrinter(NodeVisitor):
                     
                 if isinstance(child[1].subscript, mc.ID) and not child[1].subscript.name in self.var_all:
                     self.var_all.append(child[1].subscript.name)
-            
+
             if not child[0] == "subscript" and isinstance(child[1], mc.ID):
                 if not child[1].name in self.var_all:
                     self.var_all.append(child[1].name)
@@ -83,11 +86,11 @@ class VarPrinter(NodeVisitor):
     
 if __name__=="__main__":
     
-    #filename = './project3inputs/p3_inputcustom'
-    filename = sys.argv[1]
+    filename = './project3inputs/p3_input2'
+    #filename = sys.argv[1]
     txt = ''
     
-    with open (filename) as f:
+    with open(filename) as f:
         txt = f.read()
 
     txt = 'void wrapper(){ \n' + txt + '\n}'
