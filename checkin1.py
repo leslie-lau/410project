@@ -31,8 +31,12 @@ class GetWrittenVariables(NodeVisitor):
     def visit_Assignment(self, assignment):
         if isinstance(assignment.lvalue, mc.ID):
             self.var_written.append(assignment.lvalue.name)
-        self.generic_visit(assignment)
+            
+        if isinstance(assignment.lvalue, mc.ArrayRef):
+            self.var_written.append(assignment.lvalue.name.name)
         
+        self.generic_visit(assignment)
+    
     def getWrittenVariables(self):
         return self.var_written
     
